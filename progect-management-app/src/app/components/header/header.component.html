@@ -1,0 +1,19 @@
+  <header class="header">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <div class="logo" (click)="goToHome()">
+          <a>Project management app</a>
+        </div>
+      </mat-toolbar-row>
+      <mat-toolbar-row>
+        <nav class="header-buttons">
+          <ul>
+            <a mat-raised-button color="primary" routerLink="/login-form">Log in</a>
+            <a mat-raised-button color="primary" routerLink="/signup-form">Sign up</a>
+            <a mat-raised-button color="primary" >Switch Language</a><!--(click)="switchLanguage()"-->
+          </ul>
+        </nav>
+      </mat-toolbar-row>
+    </mat-toolbar>
+   </header>
+
