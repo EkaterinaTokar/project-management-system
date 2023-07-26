@@ -1,8 +1,9 @@
 <div class="boards">
   <h2>Доски</h2>
-<button (click)="addBoard()">Добавить доску</button>
-  <div class="board" *ngFor="let board of boards">
-    <p>{{ board.title }}</p>
-  </div><!--(click)="goToBoard(board.id)"-->
+<button (click)="addBoard()">Add board</button>
+  <div class="board" *ngFor="let board of boards" (click)="goToBoard(board)">
+    <button (click)="deleteBoard(board)">Delete board</button>
+    <a>{{ board.title }}</a>
+  </div>
 </div>
 

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 //import { Observable} from 'rxjs';
 import {AuthService} from "../services/auth.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {BoardsService, Board} from "./services/boards.service";
+import { MatDialog } from '@angular/material/dialog';
+import {DialogComponent} from "../dialog/dialog.component";
 
 
 @Component({
@@ -13,44 +15,41 @@ import {BoardsService, Board} from "./services/boards.service";
 })
 export class MainBoardsComponent implements OnInit {
   //private apiUrl = 'http://localhost:3000';
-  boards: Board[] = [];
+  boards: Array<any> = [];
   userId = '';
+
   constructor(
-    private  http: HttpClient,
+    private http: HttpClient,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private boardsService: BoardsService
-    ) {}
+    private router: Router,
+    private boardsService: BoardsService,
+    private dialog: MatDialog
+  ) {
+  }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       if (params && params['login']) {
         console.log('Логин пользователя(params):', params['login']);
-        this.getUserId(params['login']);
+        this.getUser(params['login']);
       }
     });
   }
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('authToken');
-  }
-  getUserId(login: string): void {
+
+  getUser(login: string): void {
     this.authService.getUsers()
       .subscribe(
         (response) => {
-         console.log(response);
-         const user = response.find((user: any) => user.login === login);
-          if (user && !this.isLoggedIn()) {
-           this.userId = user._id;
+          console.log(response);
+          const user = response.find((user: any) => user.login === login);
+          this.userId = user._id;
+          if (user && !this.authService.isAuthenticated()) {
             this.addBoard();
           }
-            this.boardsService.getBoards(user._id).subscribe(
-              (data) => {
-                console.log(data)
-                this.boards = data;
-              })
-        })
-   /* goToBoard(boardId: string): void {
-      // переход на одну из досок по boardId
-    }*/
+          this.getBoards(this.userId);
+          console.log(this.userId);
+    })
   }
 
   addBoard() {
@@ -60,16 +59,39 @@ export class MainBoardsComponent implements OnInit {
       owner: this.userId,
       users: []
     };
-    this.boardsService.createBoards(boardData.title, boardData.owner, boardData.users)
+     this.boardsService.createBoard(boardData.title, boardData.owner, boardData.users)
+       .subscribe(
+          (res) => {
+          console.log(res);
+         this.getBoards(this.userId);
+      })
+  }
+  getBoards(ownerId:string){
+    this.boardsService.getBoards(ownerId)
       .subscribe(
-        (createdBoard) => {
-          this.boards.push(createdBoard);
-          console.log(createdBoard);
-        })
-    this.boardsService.getBoards(this.userId).subscribe(
       (boards) => {
         console.log(boards)
         this.boards = boards;
       })
+  }
+  deleteBoard(userIdDel: any){
+  const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.boardsService.deleteBoard(userIdDel._id)
+          .subscribe(
+            (res) =>{
+              console.log(res)
+              console.log("board delete")
+              this.getBoards(this.userId);
+            }
+          )
+        }
+      })
+    }
+   goToBoard(boardId: any): void {
+
+    console.log(boardId._id);
+     //this.router.navigate(['/dashboard'/*, boardId._id*/]);
   }
 }

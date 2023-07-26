@@ -9,6 +9,7 @@ import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
+import {MatDialogModule} from "@angular/material/dialog";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,8 +19,11 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
 import { MainBoardsComponent } from './components/main-boards/main-boards.component';
-import { BoardComponent } from './components/board/board.component';
 import {AuthInterceptorInterceptor} from "./components/services/auth-interceptor.interceptor";
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+
+
 
 
 @NgModule({
@@ -28,7 +32,8 @@ import {AuthInterceptorInterceptor} from "./components/services/auth-interceptor
     HeaderComponent,
     FooterComponent,
     MainBoardsComponent,
-    BoardComponent,
+    DashboardComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +48,8 @@ import {AuthInterceptorInterceptor} from "./components/services/auth-interceptor
     ReactiveFormsModule,
     SignupFormComponent,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
 
   ],
   providers: [
