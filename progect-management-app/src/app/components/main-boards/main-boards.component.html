@@ -1,1 +1,8 @@
-<p>main-boards works!</p>
+<div class="boards">
+  <h2>Доски</h2>
+<button (click)="addBoard()">Добавить доску</button>
+  <div class="board" *ngFor="let board of boards">
+    <p>{{ board.title }}</p>
+  </div><!--(click)="goToBoard(board.id)"-->
+</div>
+

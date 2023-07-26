@@ -14,13 +14,6 @@
       {{errorMessageLogin()}}
     </mat-error>
   </mat-form-field>
-  <!--<mat-form-field>
-    <mat-label>Enter your email</mat-label>
-    <input formControlName="email" matInput type="text" placeholder="example@example.com" required>
-    <mat-error *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
-      {{errorMessageEmail()}}
-    </mat-error>
-  </mat-form-field>-->
   <mat-form-field>
   <mat-label>Enter your password</mat-label>
   <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>

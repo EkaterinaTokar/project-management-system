@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormsModule } from '@angular/forms'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,9 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SignupFormComponent } from './components/signup-form/signup-form.component';
 import { MainBoardsComponent } from './components/main-boards/main-boards.component';
+import { BoardComponent } from './components/board/board.component';
+import {AuthInterceptorInterceptor} from "./components/services/auth-interceptor.interceptor";
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { MainBoardsComponent } from './components/main-boards/main-boards.compon
     HeaderComponent,
     FooterComponent,
     MainBoardsComponent,
+    BoardComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,11 @@ import { MainBoardsComponent } from './components/main-boards/main-boards.compon
     FormsModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorInterceptor,
+      multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,9 +6,11 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {NgIf} from "@angular/common";
 import {Router, ActivatedRoute} from "@angular/router";
-import {SignupService} from "./services/signup.service";
+import {AuthService} from "../services/auth.service";
 import { tap } from 'rxjs';
 import {first} from "rxjs";
+
+
 
 @Component({
   selector: 'app-signup-form',
@@ -24,7 +26,7 @@ export class SignupFormComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private signup: SignupService,
+    private signup: AuthService,
     private router: Router
   ) {
   }
@@ -32,7 +34,6 @@ export class SignupFormComponent implements OnInit{
     this.signupForm = new FormGroup({
       'name': new FormControl('', [Validators.required]),
       'login': new FormControl('', [Validators.required]),
-      //'email':new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', [Validators.required])
     })
   }
@@ -50,13 +51,6 @@ export class SignupFormComponent implements OnInit{
     }
     return '';
   }
-  /*errorMessageEmail():string{
-    const emailControl = this.signupForm.get('email');
-    if (emailControl && emailControl.hasError('required')) {
-      return 'You must enter a value';
-    }
-    return '';
-  }*/
   errorMessagePassword():string{
     const passwordControl = this.signupForm.get('password');
     if (passwordControl && passwordControl.hasError('required')) {
@@ -67,30 +61,19 @@ export class SignupFormComponent implements OnInit{
     }
     return '';
   }
+
   onSignup() {
-      const form = this.signupForm.value;
-      if (form.name && form.login && form.password) {
-        this.signup.signup(form.name, form.login, /*form.email,*/ form.password)
-          .pipe(first())
-          .subscribe({
-              next: ()=>{
-                console.log("User is logged in");
-                this.router.navigate(['/main-boards'],{ relativeTo: this.route });
-              }
-            }
-          );
-      }
-      console.log(this.signupForm.value)
-    /*this.router.navigate(['/main-boards']);*/
+    if (this.signupForm.invalid) {
+      return;
+    }
+    const form = this.signupForm.value;
+    if (form.name && form.login && form.password) {
+      this.signup.signup(form.name, form.login, form.password)
+        .subscribe(
+          (response) => {
+            console.log("User is signup");
+            this.router.navigate(['/login-form']);
+          });
+    }
   }
-  /*loadData() {
-    let name = this.signupForm.controls.name.value;
-    this.signup.signup(name)
-      .pipe(
-        tap(() => {
-          this.router.navigate(['/main-boards']);
-        })
-      )
-      .subscribe();
-  }*/
 }

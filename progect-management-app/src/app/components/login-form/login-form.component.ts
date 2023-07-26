@@ -6,9 +6,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {Router,ActivatedRoute} from "@angular/router";
-import {LoginService} from "./services/login.service";
-import {first} from "rxjs";
-
+import {AuthService} from "../services/auth.service";
+//import {first} from "rxjs";
+//import {AuthInterceptorInterceptor} from "../services/auth-interceptor.interceptor";
 
 @Component({
   selector: 'app-login-form',
@@ -17,55 +17,51 @@ import {first} from "rxjs";
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule, NgIf],
 })
-export class LoginFormComponent implements OnInit{
-  loginForm!:FormGroup;
+export class LoginFormComponent implements OnInit {
+  loginForm!: FormGroup;
   hide = true;
+
   constructor(
     private route: ActivatedRoute,
-    private login: LoginService,
+    private authService: AuthService,
     private router: Router
   ) {
   }
-  ngOnInit():void {
+
+  ngOnInit(): void {
     this.loginForm = new FormGroup({
-      'login': new FormControl('',[Validators.required]),
+      'login': new FormControl('', [Validators.required]),
       'password': new FormControl('',
         [
-          Validators.required,
-          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)])
+          Validators.required])/*,
+          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)])*/
     })
   }
-  errorMessageLogin():string {
+
+  errorMessageLogin(): string {
     const loginControl = this.loginForm.get('login');
     if (loginControl && loginControl.hasError('required')) {
       return 'You must enter a value';
     }
     return '';
   }
+
   errorMessagePassword(): string {
     const passwordControl = this.loginForm.get('password');
-    if (passwordControl && passwordControl.hasError('required')) {
+    /*if (passwordControl && passwordControl.hasError('required')) {
       return 'You must enter a value';
     }
     if (passwordControl && passwordControl.hasError('pattern')) {
       return 'Minimum 8 characters, at least one letter and one number';
-    }
+    }*/
     return '';
   }
-  submit(){
-   const form = this.loginForm.value;
-    if (form.login && form.password) {
-      this.login.login(form.email, form.password)
-        .pipe(first())
-        .subscribe({
-            next: ()=>{
-              console.log("User is logged in");
-              const getUrl = this.route.snapshot.queryParams['getUrl'] || '/';
-              this.router.navigateByUrl('/');//page boards
-            }
-          }
-        );
-    }
- console.log(this.loginForm.value)
+
+  onLogin() {
+      const form = this.loginForm.value;
+      if (form.login && form.password) {
+        this.authService.login(form.login, form.password)
+      }
   }
 }
+

@@ -1,5 +1,5 @@
 <div>
-<form [formGroup]="loginForm" (ngSubmit)="submit()" class="login__container">
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login__container">
   <mat-form-field>
     <mat-label>Login</mat-label>
     <input formControlName="login" matInput type= "text" required>
