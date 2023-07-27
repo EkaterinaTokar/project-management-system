@@ -22,6 +22,9 @@ import { MainBoardsComponent } from './components/main-boards/main-boards.compon
 import {AuthInterceptorInterceptor} from "./components/services/auth-interceptor.interceptor";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { ColumnFormComponent } from './components/dashboard/column-form/column-form.component';
+import { TaskFormComponent } from './components/dashboard/task-form/task-form.component';
+
 
 
 
@@ -34,6 +37,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MainBoardsComponent,
     DashboardComponent,
     DialogComponent,
+    ColumnFormComponent,
+    TaskFormComponent,
   ],
   imports: [
     BrowserModule,

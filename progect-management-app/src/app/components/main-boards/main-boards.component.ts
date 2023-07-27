@@ -75,7 +75,11 @@ export class MainBoardsComponent implements OnInit {
       })
   }
   deleteBoard(userIdDel: any){
-  const dialogRef = this.dialog.open(DialogComponent);
+  const dialogRef = this.dialog.open(DialogComponent,{
+    data: {
+      message: 'Are you sure you want to delete this board?'
+    }
+  });
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.boardsService.deleteBoard(userIdDel._id)
@@ -89,9 +93,14 @@ export class MainBoardsComponent implements OnInit {
         }
       })
     }
-   goToBoard(boardId: any): void {
-
-    console.log(boardId._id);
-     //this.router.navigate(['/dashboard'/*, boardId._id*/]);
+   goToBoard(board: any): void {
+     if (board && board._id) {
+       const boardId = board._id;
+       console.log(boardId);
+       this.router.navigate([`/dashboard/:${boardId}`],
+         {queryParams : {boardId: boardId, userId: this.userId}});
+     } else {
+       console.log('Invalid board object or boardId');
+     }
   }
 }

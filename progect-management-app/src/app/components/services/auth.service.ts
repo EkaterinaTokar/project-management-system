@@ -21,7 +21,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private authenticatedSub = new Subject<boolean>();
     constructor(
-      private route: Router,
+      private router: Router,
       private http: HttpClient) { }
   signup(name:string, login:string, password:string): Observable<UserSignup> {
     return this.http.post<UserSignup>(`${this.apiUrl}/auth/signup`, {name, login, password})
@@ -36,7 +36,7 @@ export class AuthService {
             this.authenticatedSub.next(true);
             this.saveAuthToken(authToken);
             console.log('Пользователь зарегистрирован');
-            this.route.navigate(['/main-boards'], { /*{ relativeTo: this.route }*/
+            this.router.navigate(['/main-boards'], { /*{ relativeTo: this.route }*/
               queryParams: {login: login}
             });
           }
@@ -45,7 +45,7 @@ export class AuthService {
   logout(){
     this.removeAuthToken();
     this.authenticatedSub.next(false);
-    this.route.navigate(['/home']);
+    this.router.navigate(['/home']);
   }
   saveAuthToken(token: string): void {
     localStorage.setItem('authToken', token);

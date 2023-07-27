@@ -1,0 +1,13 @@
+<div>
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <label>Title:</label>
+    <input type="text" formControlName="title" required>
+    <label>Order:</label>
+    <textarea formControlName="order" required></textarea>
+
+    <label>Description:</label>
+    <textarea formControlName="description" required></textarea>
+
+    <button type="submit" [disabled]="taskForm.invalid">Create Task</button>
+  </form>
+</div>

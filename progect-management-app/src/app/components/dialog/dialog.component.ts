@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject} from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -8,11 +8,13 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
-  //private title:string;
-  //private context:string;
+  message: string;
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>
-  ) { }
+    public dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.message = data.message || 'Are you sure?';
+  }
 
   onConfirm(): void {
     this.dialogRef.close(true);

@@ -1,0 +1,10 @@
+<h2>Create Column</h2>
+<form [formGroup]="columnForm" (submit)="onSubmit()">
+  <label>
+    Title:
+    <input type="text" formControlName="title" required>
+    Order:
+    <input type="text" formControlName="order" required>
+  </label>
+  <button type="submit">Create</button>
+</form>
