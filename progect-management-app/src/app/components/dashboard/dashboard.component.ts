@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 //import {HttpHeaders} from "@angular/common/http";
 import {DashboardService, Column, Task} from "./services/dashboard.service";
@@ -6,27 +6,32 @@ import { MatDialog } from '@angular/material/dialog';
 import {DialogComponent} from "../dialog/dialog.component";
 import { Location } from '@angular/common';
 import {ColumnFormComponent} from "./column-form/column-form.component";
-import {first, map, pipe} from "rxjs";
+import {first, map, pipe, find} from "rxjs";
 import {TaskFormComponent} from "./task-form/task-form.component";
+import {TaskEditFormComponent} from "./task-edit-form/task-edit-form.component";
+
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
+
 export class DashboardComponent implements OnInit {
-  @Input() column: any;
-  @Input() task: any;
   boardId = '';
   columns: Array<any> = [];
-  tasks: Task[] = [];
+  taskData: Task[] = [];
   userDataId = '';
+  @Output() updatedTaskDataEvent: EventEmitter<Task> = new EventEmitter();
+
+
 
   constructor(
     private route: ActivatedRoute,
     private dashboardsService: DashboardService,
     private dialog: MatDialog,
-    private location: Location
+    private location: Location,
+    private changeDetector: ChangeDetectorRef,
   ) {
   }
 
@@ -121,8 +126,9 @@ export class DashboardComponent implements OnInit {
       userId: this.userDataId,
       users: ["string"]
     };*/
+
     this.dashboardsService.addTask(
-      boardId, columnId, taskData.title, taskData.order,taskData.description,taskData.userId!, taskData.users!
+      boardId, columnId, taskData.title, taskData.order!,taskData.description,taskData.userId as number, taskData.users!
       )
       .subscribe(
         (task: Task) => {
@@ -183,6 +189,50 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+  updateTaskForm(boardId:string, columnId:string, taskId:string,title:string, description:string){
+    const taskChange: Task = {
+      _id: taskId,
+      boardId: boardId,
+      columnId: columnId,
+      title: title,
+      order: 0,
+      userId: this.userDataId,
+      description: description,
+      users: ["string"]
+    };
+    const dialogRef = this.dialog.open(TaskEditFormComponent, {
+      data: taskChange,
+    });
+    dialogRef.afterClosed().subscribe(
+      (updatedTaskData: Task) => {
+        if (updatedTaskData) {
+          this.dashboardsService.updateTask(
+            updatedTaskData.boardId!,
+            updatedTaskData.columnId!,
+            updatedTaskData._id!,
+            updatedTaskData.title,
+            updatedTaskData.order!,
+            this.userDataId,
+            updatedTaskData.description,
+            updatedTaskData.users!)
+            .subscribe(
+              (response: any) => {
+                console.log('Task updated on the server:', response);
+                const updatedColumn = this.columns.find(column => column._id === response.columnId);
+                if (updatedColumn) {
+                  const updatedTaskIndex = updatedColumn.tasks.findIndex((t: any) => t._id === response._id);
+                  if (updatedTaskIndex !== -1) {
+                    updatedColumn.tasks[updatedTaskIndex] = response;
+                  }
+                }
+              });
+
+        }
+
+      });
+  }
+
+
   toggleEdit(column: Column) {
     column.isEditing = !column.isEditing;
     if (column.isEditing) {
@@ -190,10 +240,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  onEdit(column: Column) {
+ /* onEdit(column: Column) {
     column.isEditing = true;
     column.editedTitle = column.title;
-  }
+  }*/
 
   onCancel(column: Column) {
     column.isEditing = false;

@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import { Injectable, EventEmitter} from '@angular/core';
+import {Observable, tap} from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+
+
 
 export interface Column{
   _id?: string,
@@ -12,11 +14,16 @@ export interface Column{
 export  interface Task{
   _id?: string,
   title: string,
-  order: number,
+  order?: number,
   description: string,
-  userId?: string,
+  userId?: string |number,
+  boardId?:string,
   columnId?:string,
-  users?: [string],
+  users?: [string]
+}
+export interface TaskUpdate {
+  title: string;
+  description: string;
 }
 
 @Injectable({
@@ -24,6 +31,7 @@ export  interface Task{
 })
 export class DashboardService {
   private apiUrl = 'http://localhost:3000';
+  updatedTaskDataEvent: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private http: HttpClient
   ) {}
@@ -39,7 +47,7 @@ export class DashboardService {
     //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.delete(`${this.apiUrl}/boards/${boardId}/columns/${columnId}`);
   }
-  addTask(boardId: string, columnId: string, title: string, order: number,description:string,userId:string, users:[string]):Observable<Task> {
+  addTask(boardId: string, columnId: string, title: string, order: number,description:string,userId:number, users:[string]):Observable<Task> {
     return this.http.post<Task>(`${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks`, {title, order,description,userId, users})
   }
   getTasks(boardId: string, columnId: string):Observable<Array<any>>{
@@ -48,7 +56,20 @@ export class DashboardService {
   deleteTask(boardId:string,columnId: string, taskId:string){
     return this.http.delete(`${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
   }
-  /*updateDashboardItem(itemId: string, item: DashboardItem): Observable<DashboardItem> {
-  return this.http.put<DashboardItem>(`${this.apiUrl}/dashboard/${itemId}`, item);
-  }*/
+  updateTask(boardId:string, columnId: string, taskId:string, title:string,order:number,userId:string, description:string,users:[string]): Observable<Task> {
+    return this.http.put<Task>(`${this.apiUrl}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+      { title,
+        order,
+        description,
+        columnId,
+        userId,
+        users}
+    ).pipe(
+      tap((response: any) => {
+        console.log('Task updated on the server:', response);
+        this.updatedTaskDataEvent.emit(response);
+      })
+    );
+   }
+
 }

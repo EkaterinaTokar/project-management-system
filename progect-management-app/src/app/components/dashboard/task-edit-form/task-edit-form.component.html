@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Изменить таск</h2>
+<form [formGroup]="taskForm">
+  <mat-form-field>
+    <input matInput formControlName="title" placeholder="Название таска">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput formControlName="description" placeholder="Описание таска">
+    </textarea>
+  </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Отмена</button>
+    <button mat-button (click)="save()"  [disabled]="taskForm.invalid">Сохранить</button>
+  </div>
+</form>
+
+
+
+

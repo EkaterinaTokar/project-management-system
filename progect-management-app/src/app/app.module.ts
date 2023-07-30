@@ -8,8 +8,12 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormsModule } from '@angular/forms'
-import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http'
 import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,9 +28,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ColumnFormComponent } from './components/dashboard/column-form/column-form.component';
 import { TaskFormComponent } from './components/dashboard/task-form/task-form.component';
+import { TaskEditFormComponent } from './components/dashboard/task-edit-form/task-edit-form.component';
 
 
-
+export function TranslateLoaderFact(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 
 @NgModule({
@@ -39,6 +46,8 @@ import { TaskFormComponent } from './components/dashboard/task-form/task-form.co
     DialogComponent,
     ColumnFormComponent,
     TaskFormComponent,
+    TaskEditFormComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -54,13 +63,21 @@ import { TaskFormComponent } from './components/dashboard/task-form/task-form.co
     SignupFormComponent,
     HttpClientModule,
     FormsModule,
-    MatDialogModule
-
+    MatDialogModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: TranslateLoaderFact,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorInterceptor,
       multi: true },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
   ],
   bootstrap: [AppComponent]
 })

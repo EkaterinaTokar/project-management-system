@@ -11,7 +11,7 @@
             <li *ngIf="!userAuthenticated"><a mat-raised-button color="primary" routerLink="/login-form">Log in</a></li>
             <li *ngIf="!userAuthenticated"><a mat-raised-button color="primary" routerLink="/signup-form">Sign up</a></li>
             <li *ngIf="userAuthenticated"><a><button type="submit" mat-raised-button color="primary" (click)="logout()">Log out</button></a></li>
-            <li><a mat-raised-button color="primary" >Switch Language</a><!--(click)="switchLanguage()"-->
+            <li><a mat-raised-button color="primary" (click)="switchLanguage()">{{ 'buttonText' | translate }}</a>
           </ul>
         </nav>
       </mat-toolbar-row>
