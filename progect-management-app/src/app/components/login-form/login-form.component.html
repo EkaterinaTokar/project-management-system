@@ -1,13 +1,13 @@
-<div>
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login__container">
-  <mat-form-field>
+<div class="login_container">
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login_container__form">
+  <mat-form-field class="login-field">
     <mat-label>Login</mat-label>
     <input formControlName="login" matInput type= "text" required>
     <mat-error *ngIf="loginForm.get('login')?.invalid && loginForm.get('login')?.touched">
       {{errorMessageLogin()}}
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="password-field">
     <mat-label>Enter your password</mat-label>
     <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>
     <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -18,5 +18,5 @@
   <div class=" button button__signup">
     <button class=" button button__signup" [disabled]="loginForm.invalid" type="submit" mat-raised-button color="primary">Log in</button>
   </div>
-</form>
+ </form>
 </div>

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {Subscription} from "rxjs";
 import { TranslateService } from '@ngx-translate/core';
+import {ThemePalette} from "@angular/material/core"
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private translate: TranslateService
     ) {
-    this.currentLanguage = this.translate.currentLang || 'en';
+    this.currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
   }
   ngOnDestroy(): void {
     this.authenticationSub.unsubscribe();
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authenticationSub = this.authService.getAuthenticatedSub().subscribe(status => {
       this.userAuthenticated = status;
     })
-
+    this.translate.use(this.currentLanguage);
   }
   goToHome() {
     this.router.navigate(['/home']);
@@ -39,6 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   switchLanguage() {
     this.currentLanguage = this.currentLanguage === 'en' ? 'ru' : 'en';
+    localStorage.setItem('selectedLanguage', this.currentLanguage);
     this.translate.use(this.currentLanguage);
   }
 }

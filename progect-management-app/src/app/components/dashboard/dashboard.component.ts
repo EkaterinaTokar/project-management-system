@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-//import {HttpHeaders} from "@angular/common/http";
 import {DashboardService, Column, Task} from "./services/dashboard.service";
 import { MatDialog } from '@angular/material/dialog';
 import {DialogComponent} from "../dialog/dialog.component";
 import { Location } from '@angular/common';
 import {ColumnFormComponent} from "./column-form/column-form.component";
-import {first, map, pipe, find} from "rxjs";
+import {first, map} from "rxjs";
 import {TaskFormComponent} from "./task-form/task-form.component";
 import {TaskEditFormComponent} from "./task-edit-form/task-edit-form.component";
 
@@ -23,8 +22,7 @@ export class DashboardComponent implements OnInit {
   taskData: Task[] = [];
   userDataId = '';
   @Output() updatedTaskDataEvent: EventEmitter<Task> = new EventEmitter();
-
-
+  selectedColumn:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -99,7 +97,7 @@ export class DashboardComponent implements OnInit {
   deleteColumn(boardId: string, columnId: string) {
     const dialogRef = this.dialog.open(DialogComponent,{
       data: {
-         message: 'Are you sure you want to delete this column-form?'
+         message: 'Are you sure you want to delete this column?'
        }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -119,14 +117,6 @@ export class DashboardComponent implements OnInit {
   }
 
   createTasks(boardId: string, columnId: string,taskData: Task){
-    /*const taskData: Task = {
-      title: "new title",
-      order: 0,
-      description: "description",
-      userId: this.userDataId,
-      users: ["string"]
-    };*/
-
     this.dashboardsService.addTask(
       boardId, columnId, taskData.title, taskData.order!,taskData.description,taskData.userId as number, taskData.users!
       )
@@ -225,14 +215,10 @@ export class DashboardComponent implements OnInit {
                     updatedColumn.tasks[updatedTaskIndex] = response;
                   }
                 }
-              });
-
+            });
         }
-
       });
   }
-
-
   toggleEdit(column: Column) {
     column.isEditing = !column.isEditing;
     if (column.isEditing) {
@@ -240,17 +226,22 @@ export class DashboardComponent implements OnInit {
     }
   }
 
- /* onEdit(column: Column) {
-    column.isEditing = true;
-    column.editedTitle = column.title;
-  }*/
-
   onCancel(column: Column) {
     column.isEditing = false;
+    this.selectedColumn = null;
   }
 
-  onSave(column: Column) {
+  onSave(column: any) {
+    this.selectedColumn = column;
     column.isEditing = false;
-    column.title = column.editedTitle as string;
+    this.dashboardsService.updateColumn(
+      this.selectedColumn._id, this.selectedColumn.boardId,this.selectedColumn.title, this.selectedColumn.order)
+      .subscribe(
+        (res) =>{
+          console.log(res)
+          this.selectedColumn = null;
+          //column.title = column.editedTitle as string;
+        }
+      )
   }
 }

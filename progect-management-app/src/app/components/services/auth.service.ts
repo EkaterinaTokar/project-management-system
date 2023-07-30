@@ -53,7 +53,7 @@ export class AuthService {
   getAuthToken(): string | null {
     return localStorage.getItem('authToken');
   }
-  refreshAccessToken(): Observable<any> {
+  refreshAuthToken(): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/refresh`, {});
   }
   removeAuthToken(): void {

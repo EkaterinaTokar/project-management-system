@@ -13,6 +13,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -64,6 +66,9 @@ export function TranslateLoaderFact(http: HttpClient) {
     HttpClientModule,
     FormsModule,
     MatDialogModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatIconModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

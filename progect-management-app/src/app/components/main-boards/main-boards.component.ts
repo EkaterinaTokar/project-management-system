@@ -17,6 +17,7 @@ export class MainBoardsComponent implements OnInit {
   //private apiUrl = 'http://localhost:3000';
   boards: Array<any> = [];
   userId = '';
+  selectedBoard: any;
 
   constructor(
     private http: HttpClient,
@@ -74,7 +75,8 @@ export class MainBoardsComponent implements OnInit {
         this.boards = boards;
       })
   }
-  deleteBoard(userIdDel: any){
+  deleteBoard(event: Event, userIdDel: any){
+  event.preventDefault();
   const dialogRef = this.dialog.open(DialogComponent,{
     data: {
       message: 'Are you sure you want to delete this board?'
@@ -93,7 +95,27 @@ export class MainBoardsComponent implements OnInit {
         }
       })
     }
-   goToBoard(board: any): void {
+  editBoard(event: Event, board: any): void {
+    event.preventDefault();
+    this.selectedBoard = board;
+    console.log(board)
+  }
+  saveBoard(selectedBoard: any){
+    console.log(selectedBoard)
+    this.boardsService.updateBoardName(
+      selectedBoard._id, selectedBoard.title, selectedBoard.owner,selectedBoard.users)
+      .subscribe(
+        (res) => {
+          console.log('Название доски обновлено:', res);
+          this.selectedBoard = null;
+        },
+      )
+  }
+  cancelEdit(board:any): void {
+  this.selectedBoard = null;
+  }
+   goToBoard(event: Event, board: any): void {
+     event.preventDefault();
      if (board && board._id) {
        const boardId = board._id;
        console.log(boardId);

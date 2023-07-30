@@ -4,14 +4,20 @@
         <div class="logo" (click)="goToHome()">
           <a>Project management app</a>
         </div>
-      </mat-toolbar-row>
-      <mat-toolbar-row>
+        <div class = "header_button__lang">
+          <button class = "header_buttons__link"
+                             mat-raised-button color= "accent"
+                             (click)="switchLanguage()">{{ 'buttonText' | translate }}</button>
+        </div>
         <nav class="header-buttons">
-          <ul class="header_buttons">
-            <li *ngIf="!userAuthenticated"><a mat-raised-button color="primary" routerLink="/login-form">Log in</a></li>
-            <li *ngIf="!userAuthenticated"><a mat-raised-button color="primary" routerLink="/signup-form">Sign up</a></li>
-            <li *ngIf="userAuthenticated"><a><button type="submit" mat-raised-button color="primary" (click)="logout()">Log out</button></a></li>
-            <li><a mat-raised-button color="primary" (click)="switchLanguage()">{{ 'buttonText' | translate }}</a>
+          <ul class="header_buttons__lists">
+            <li class = "header_buttons__item"><a class = "header_buttons__link" mat-raised-button color="primary" routerLink="/login-form">Log in</a></li>
+            <li class = "header_buttons__item" *ngIf="!userAuthenticated"><a class = "header_buttons__link" mat-raised-button color="primary" routerLink="/signup-form">Sign up</a></li>
+            <li class = "header_buttons__item" *ngIf="userAuthenticated">
+               <a class = "header_buttons__link">
+                 <button type="submit" mat-raised-button color="primary" (click)="logout()">Log out</button>
+               </a>
+            </li>
           </ul>
         </nav>
       </mat-toolbar-row>

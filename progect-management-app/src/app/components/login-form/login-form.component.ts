@@ -7,8 +7,7 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgIf} from "@angular/common";
 import {Router,ActivatedRoute} from "@angular/router";
 import {AuthService} from "../services/auth.service";
-//import {first} from "rxjs";
-//import {AuthInterceptorInterceptor} from "../services/auth-interceptor.interceptor";
+
 
 @Component({
   selector: 'app-login-form',
@@ -31,10 +30,11 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       'login': new FormControl('', [Validators.required]),
-      'password': new FormControl('',
+     'password': new FormControl('',
         [
-          Validators.required])/*,
-          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)])*/
+          Validators.required])
+      /*Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+   ]),*/
     })
   }
 
@@ -48,12 +48,12 @@ export class LoginFormComponent implements OnInit {
 
   errorMessagePassword(): string {
     const passwordControl = this.loginForm.get('password');
-    /*if (passwordControl && passwordControl.hasError('required')) {
+    if (passwordControl && passwordControl.hasError('required')) {
       return 'You must enter a value';
     }
     if (passwordControl && passwordControl.hasError('pattern')) {
-      return 'Minimum 8 characters, at least one letter and one number';
-    }*/
+      return 'Min 8 chars, at least 1 letter & 1 number';
+    }
     return '';
   }
 

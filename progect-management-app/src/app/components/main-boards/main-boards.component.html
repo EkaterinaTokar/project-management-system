@@ -1,9 +1,42 @@
-<div class="boards">
-  <h2>Доски</h2>
-<button (click)="addBoard()">Add board</button>
-  <div class="board" *ngFor="let board of boards" (click)="goToBoard(board)">
-    <button (click)="deleteBoard(board)">Delete board</button>
-    <a>{{ board.title }}</a>
+<div class="boards_container">
+  <div class="board_head">
+  <h2>Boards</h2>
+  <button (click)="addBoard()" style="width: 200px; border-radius: 10px" mat-mini-fab matTooltip="Add board" color="primary">
+    <mat-icon>add</mat-icon>
+  </button>
   </div>
+<!--<button (click)="addBoard()">Add board</button>-->
+  <div class="board_container">
+  <div class="board" *ngFor="let board of boards">
+    <div>
+      <p *ngIf="selectedBoard !== board" >{{ board.title }}</p>
+      <div class="updateField" *ngIf="selectedBoard === board">
+          <textarea class="updateInput" [(ngModel)]="board.title">
+          </textarea>
+        <button style="width: 36px; height: 26px; border-radius:10%; padding:0 30px; margin: 5px"
+                (click)="saveBoard(board)"
+                mat-fab color="primary">Save</button>
+        <button style="width: 36px; height: 26px; border-radius:10%; padding:0 30px; margin: 5px"
+                (click)="cancelEdit(board)" mat-fab color="primary">Cancel</button>
+      </div>
+    </div>
+    <div class="board_buttons">
+    <button style="width: 36px; height: 36px" (click)="deleteBoard($event, board)" matTooltip="Delete board" mat-fab color="primary">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button style="width: 36px; height: 36px" (click)="goToBoard($event, board)"  mat-fab color="primary">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+      <div>
+        <div *ngIf="selectedBoard !== board">
+          {{ board.name }}
+          <button style="width: 36px; height: 36px" (click)="editBoard($event, board)"  mat-fab color="primary">
+            <mat-icon>create</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 

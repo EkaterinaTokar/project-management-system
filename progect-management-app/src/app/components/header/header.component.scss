@@ -3,12 +3,16 @@
   justify-content: space-between;
 }
 .mat-toolbar-row{
-  width: 30%;
+ justify-content: space-between;
+  margin: 0 15px;
 }
 .logo{
   cursor:pointer
 }
-.header_buttons{
+.header_buttons__lists{
   list-style: none;
   display: flex;
+}
+.header_buttons__item{
+  margin: 0 10px;
 }

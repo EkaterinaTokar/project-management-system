@@ -43,6 +43,10 @@ export class DashboardService {
    //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.get<Array<any>>(`${this.apiUrl}/boards/${boardColumnId}/columns`)
   }
+  updateColumn(columnId:string, boardId:string,title:string, order:string){
+    //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
+    return this.http.put(`${this.apiUrl}/boards/${boardId}/columns/${columnId}`, {title, order})
+  }
   deleteColumn(boardId:string, columnId:string){
     //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.delete(`${this.apiUrl}/boards/${boardId}/columns/${columnId}`);

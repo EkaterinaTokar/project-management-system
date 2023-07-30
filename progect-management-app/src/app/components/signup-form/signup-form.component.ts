@@ -7,10 +7,6 @@ import {MatIconModule} from "@angular/material/icon";
 import {NgIf} from "@angular/common";
 import {Router, ActivatedRoute} from "@angular/router";
 import {AuthService} from "../services/auth.service";
-import { tap } from 'rxjs';
-import {first} from "rxjs";
-
-
 
 @Component({
   selector: 'app-signup-form',
@@ -34,7 +30,11 @@ export class SignupFormComponent implements OnInit{
     this.signupForm = new FormGroup({
       'name': new FormControl('', [Validators.required]),
       'login': new FormControl('', [Validators.required]),
-      'password': new FormControl('', [Validators.required])
+      'password': new FormControl('',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+        ]),
     })
   }
   errorMessageName():string{
@@ -57,7 +57,7 @@ export class SignupFormComponent implements OnInit{
       return 'You must enter a value';
     }
     if (passwordControl && passwordControl.hasError('pattern')) {
-      return 'Minimum 8 characters, at least one letter and one number';
+      return 'Min 8 chars, at least 1 letter & 1 number';
     }
     return '';
   }
@@ -73,7 +73,7 @@ export class SignupFormComponent implements OnInit{
           (response) => {
             console.log("User is signup");
             this.router.navigate(['/login-form']);
-          });
+        });
     }
   }
 }

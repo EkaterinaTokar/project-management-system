@@ -12,6 +12,7 @@ import {DashboardComponent} from "./components/dashboard/dashboard.component";
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'main', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login-form', component: LoginFormComponent},
   { path: 'signup-form', component: SignupFormComponent},

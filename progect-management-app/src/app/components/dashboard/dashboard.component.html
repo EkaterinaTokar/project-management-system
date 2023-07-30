@@ -1,29 +1,59 @@
-
 <div class="board">
   <button (click)="goBack()">Back</button>
+  <div class="board__title">
   <h2>Columns</h2>
-  <button (click)="openModuleForm()">create column</button>
-  <div class="columns">
-    <div class="column"  *ngFor="let column of columns">
-      <button (click)="deleteColumn(column.boardId, column._id)">Delete column</button>
-      <button (click)="openModuleFormTask(column.boardId, column._id)">Create task</button>
+  <button (click)="openModuleForm()"
+          style="width: 200px; border-radius: 10px" mat-mini-fab color="primary">
+    Create board
+  </button>
+  </div>
+  <div class="columns_container">
+    <div class="column_container"  *ngFor="let column of columns">
+      <div class="column_title">
       <div *ngIf="!column.isEditing" (click)="toggleEdit(column)">
         {{ column.title }}
       </div>
-      <div *ngIf="column.isEditing">
-        <input type="text" [(ngModel)]="column.editedTitle" />
-        <button (click)="onCancel(column)">Отмена</button>
-        <button (click)="onSave(column)">Сохранить</button>
+        <div *ngIf="column.isEditing">
+          <input type="text" [(ngModel)]="column.title" />
+          <button (click)="onCancel(column)"
+                  style="width: 36px; height: 26px; border-radius:10%; padding:0 30px; margin: 5px"
+                  mat-fab color="primary">Cancel</button>
+          <button (click)="onSave(column)"
+                  style="width: 36px; height: 26px; border-radius:10%; padding:0 30px; margin: 5px"
+                  mat-fab color="primary">Save</button>
+        </div>
+        <div class="column_title_buttons">
+      <button style="width: 36px; height: 36px" (click)="deleteColumn(column.boardId, column._id)"
+              matTooltip="Delete column" mat-fab color="primary">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button (click)="openModuleFormTask(column.boardId, column._id)"
+              style="width: 36px; height: 36px" mat-mini-fab matTooltip=" Create task" color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
       </div>
-      <p>Order: {{ column.order }}</p>
-      <div class="tasks" *ngFor="let task of column.tasks">
-        <div class="task">
-          <h4>{{ task.title }}</h4>
-          <p>{{ task.description }}</p>
-          <button (click)="updateTaskForm(task.boardId, task.columnId, task._id, task.title, task.description )">Update task</button>
-          <button (click)="deleteTask(task.boardId, task.columnId, task._id)">Delete task</button>
+    </div>
+      <!--<p>Order: {{ column.order }}</p>-->
+      <div class="tasks__container" *ngFor="let task of column.tasks">
+        <div class="task__container">
+          <div class="task">
+            <h4 class="task__container_title">{{ task.title }}</h4>
+            <p class="task__container_desc">{{ task.description }}</p>
+          </div>
+          <div class="task__container_buttons">
+          <button style="width: 36px; height: 36px"
+                  mat-fab color="primary"
+                  (click)="updateTaskForm(task.boardId, task.columnId, task._id, task.title, task.description )">
+            <mat-icon>create</mat-icon>
+          </button>
+          <button style="width: 36px; height: 36px"
+                  (click)="deleteTask(task.boardId, task.columnId, task._id)"
+                  matTooltip="Delete task" mat-fab color="primary">
+            <mat-icon>delete</mat-icon>
+          </button>
+          </div>
         </div>
       </div>
   </div>
-</div>
+ </div>
 </div>

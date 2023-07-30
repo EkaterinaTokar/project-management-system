@@ -27,5 +27,8 @@ export class BoardsService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.delete(`${this.apiUrl}/boards/${userIdDel}`, { headers });
   }
+  updateBoardName(boardId:string, title: string, owner: string, users: string[]){
+    return this.http.put(`${this.apiUrl}/boards/${boardId}`, { title, owner, users});
+  }
 
 }

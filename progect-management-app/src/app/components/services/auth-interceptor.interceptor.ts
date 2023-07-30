@@ -26,7 +26,7 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
-          return this.authService.refreshAccessToken().pipe(
+          return this.authService.refreshAuthToken().pipe(
             switchMap((response: any) => {
               const newAuthToken = response.authToken;
               this.authService.saveAuthToken(newAuthToken);
@@ -53,27 +53,4 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
       },
     });
   }
-    /*const req = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${AuthInterceptorInterceptor.accessToken}`,
-      },
-    });
-    return next.handle(req).pipe(catchError((err: HttpErrorResponse) => {
-      if (err.status === 401  && !this.refresh) {
-        this.refresh = true;
-        return this.http.post(`${this.apiUrl}/api/refresh`, {}).pipe(
-          switchMap((res: any) => {
-            AuthInterceptorInterceptor.accessToken = res.token;
-            return next.handle(req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${AuthInterceptorInterceptor.accessToken}`,
-              },
-            }));
-          })
-        );
-      }
-      this.refresh = false;
-      return throwError(() => err)
-    }));*/
-
 }
