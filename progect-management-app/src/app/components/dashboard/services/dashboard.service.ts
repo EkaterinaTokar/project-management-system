@@ -28,7 +28,7 @@ export interface TaskUpdate {
   providedIn: 'root'
 })
 export class DashboardService {
-  private apiUrl = 'final-task-backend-production-d6a0.up.railway.app';
+  private apiUrl = 'https://final-task-backend-production-d6a0.up.railway.app';
   updatedTaskDataEvent: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private http: HttpClient

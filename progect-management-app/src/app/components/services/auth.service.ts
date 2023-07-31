@@ -23,7 +23,7 @@ export interface UserDetails {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'final-task-backend-production-d6a0.up.railway.app';
+  private apiUrl = 'https://final-task-backend-production-d6a0.up.railway.app';
   private authenticatedSub = new Subject<boolean>();
   updatedProfileDataEvent: EventEmitter<any> = new EventEmitter<any>();
     constructor(
