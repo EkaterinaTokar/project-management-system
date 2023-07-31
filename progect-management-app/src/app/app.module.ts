@@ -32,9 +32,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import { ErrorComponent } from './components/error/error.component';
 
-export function TranslateLoaderFact(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ export function TranslateLoaderFact(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: TranslateLoaderFact,
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
     }),
