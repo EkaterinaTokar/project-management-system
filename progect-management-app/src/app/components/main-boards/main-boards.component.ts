@@ -44,7 +44,6 @@ export class MainBoardsComponent implements OnInit {
     this.authService.getUsers()
       .subscribe(
         (response) => {
-          console.log(response);
           const user = response.find((user: any) => user.login === login);
           this.userId = user._id;
           localStorage.setItem('userId', this.userId);
@@ -52,7 +51,6 @@ export class MainBoardsComponent implements OnInit {
             this.addBoard();
           }
           this.getBoards(this.userId);
-          console.log(this.userId);
     })
   }
 

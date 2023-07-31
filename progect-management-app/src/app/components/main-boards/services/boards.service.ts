@@ -13,7 +13,7 @@ export interface Board {
   providedIn: 'root'
 })
 export class BoardsService {
-  private apiUrl = 'http://localhost:3000'
+  private apiUrl = 'final-task-backend-production-d6a0.up.railway.app'
   constructor(private http: HttpClient) { }
 
   createBoard(title: string, owner: string, users: string[]): Observable<Board> {

@@ -9,8 +9,6 @@ import {Router,ActivatedRoute} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {TranslateModule} from "@ngx-translate/core";
 
-
-
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',

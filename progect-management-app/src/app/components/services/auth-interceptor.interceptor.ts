@@ -11,7 +11,7 @@ import {AuthService} from "./auth.service";
 
 @Injectable()
 export class AuthInterceptorInterceptor implements HttpInterceptor {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'final-task-backend-production-d6a0.up.railway.app';
 
   constructor(
     private http: HttpClient,
