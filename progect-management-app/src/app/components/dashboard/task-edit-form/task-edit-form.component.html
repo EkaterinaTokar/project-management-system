@@ -1,18 +1,18 @@
-<h2 mat-dialog-title>Изменить таск</h2>
-<form [formGroup]="taskForm">
-  <mat-form-field>
-    <input matInput formControlName="title" placeholder="Название таска">
+<div class="task-edit_container">
+<form [formGroup]="taskForm" class="task-edit__form">
+  <h2>{{'Change Task'}}</h2>
+  <mat-form-field class="title-field">
+    <mat-label>{{'Title' | translate}}</mat-label>
+    <input matInput formControlName="title">
   </mat-form-field>
-  <mat-form-field>
-    <textarea matInput formControlName="description" placeholder="Описание таска">
+  <mat-form-field class="description-field">
+    <mat-label>{{'Description' | translate}}</mat-label>
+    <textarea matInput formControlName="description">
     </textarea>
   </mat-form-field>
   <div mat-dialog-actions>
-    <button mat-button (click)="cancel()">Отмена</button>
-    <button mat-button (click)="save()"  [disabled]="taskForm.invalid">Сохранить</button>
+    <button class="button" mat-raised-button (click)="save()"  [disabled]="taskForm.invalid"color="primary">{{'Save' | translate}}</button>
+    <button class="button" mat-raised-button (click)="cancel()" color="warn">{{'Cancel' | translate}}</button>
   </div>
 </form>
-
-
-
-
+</div>

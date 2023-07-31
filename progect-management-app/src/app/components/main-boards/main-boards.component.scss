@@ -4,6 +4,10 @@
 .board_head{
   text-align: center;
 }
+.board_main-title {
+  text-transform: uppercase;
+  font-size: 32px;
+}
 .board {
   display: flex;
   justify-content: space-between;

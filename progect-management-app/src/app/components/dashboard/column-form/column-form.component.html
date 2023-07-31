@@ -1,10 +1,17 @@
-<h2>Create Column</h2>
-<form [formGroup]="columnForm" (submit)="onSubmit()">
-  <label>
-    Title:
-    <input type="text" formControlName="title" required>
-    Order:
-    <input type="text" formControlName="order" required>
-  </label>
-  <button type="submit">Create</button>
+<div  class="column-form_container">
+<form [formGroup]="columnForm" (submit)="onSubmit()" class="column-form">
+  <h2>{{'Create column' | translate}}</h2>
+  <mat-form-field class="title-field">
+    <mat-label>{{'Title' | translate}}</mat-label>
+    <input type="text" matInput formControlName="title" required>
+  </mat-form-field>
+  <mat-form-field class="order-field">
+    <mat-label>{{'Order' | translate}}</mat-label>
+    <input type="text" matInput formControlName="order" id="order" required>
+    <div *ngIf="columnForm.get('order')?.hasError('pattern')" style="color: red">
+      Only numbers are allowed!
+    </div>
+  </mat-form-field>
+  <button type="submit" class="button" mat-raised-button color="primary">{{'Create'| translate}}</button>
 </form>
+</div>

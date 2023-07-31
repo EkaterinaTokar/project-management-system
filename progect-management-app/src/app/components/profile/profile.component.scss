@@ -1,4 +1,4 @@
-.task-form_container{
+.profile_container{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,13 +6,16 @@
   height: 60%;
   text-align: center;
 }
-.task-form{
+.profile_container__form{
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 550px;
   padding: 90px 15px;
 }
-.title-field, .order-field, .description-field {
+.login-field, .name-field {
   width: 400px;
+}
+.button{
+  margin: 10px;
 }

@@ -2,3 +2,47 @@
   position: fixed;
   bottom: 0;
 }
+.footer_container{
+  position: relative;
+  top: 0;
+  left:30px;
+  display: flex;
+  justify-content: center;
+  column-gap: 100px;
+}
+.footer_list{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer_list {
+  li {
+    a {
+      text-decoration: none;
+      display: inline-block;
+      color: white;
+      font-weight: bold;
+    }
+  }
+}
+
+.text_right img, .text_left img{
+  width: 100px;
+  height: 50px;
+}
+.text_right img{
+  margin: 5px 0;
+  padding: 5px 0;
+  height: 30px;
+}
+time{
+  position: relative;
+  top: 30px;
+  left:500px;
+  display: block;
+  text-align: center;
+  height: 20px;
+}
+

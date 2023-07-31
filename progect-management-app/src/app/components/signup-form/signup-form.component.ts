@@ -7,6 +7,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {NgIf} from "@angular/common";
 import {Router, ActivatedRoute} from "@angular/router";
 import {AuthService} from "../services/auth.service";
+import {ErrorService} from "../error/services/error.service";
 
 @Component({
   selector: 'app-signup-form',
@@ -23,7 +24,8 @@ export class SignupFormComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private signup: AuthService,
-    private router: Router
+    private router: Router,
+    private errorService: ErrorService
   ) {
   }
   ngOnInit():void {
@@ -64,6 +66,8 @@ export class SignupFormComponent implements OnInit{
 
   onSignup() {
     if (this.signupForm.invalid) {
+      const errorMessage = 'Error occurred during processing';
+      this.errorService.openDialog(errorMessage);
       return;
     }
     const form = this.signupForm.value;

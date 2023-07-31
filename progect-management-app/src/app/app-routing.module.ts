@@ -7,9 +7,6 @@ import {MainBoardsComponent} from "./components/main-boards/main-boards.componen
 import {authGuard} from "./components/guard/auth.guard";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 
-
-
-
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: 'main', pathMatch: 'full' },

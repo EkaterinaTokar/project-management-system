@@ -1,3 +1,23 @@
 {
-  "buttonText": "En"
+  "buttonText": "En",
+  "Sign up": "Sign up",
+  "Edit profile": "Edit profile",
+  "Log in": "Log in",
+  "Log out": "Log out",
+  "welcome": "Welcome to the Project Management App",
+  "assistant": "Your reliable assistant in project management!",
+  "firstParagraph": "Here you can organize tasks, create columns for managing processes, and monitor the progress of all important projects.",
+  "Create": "Create",
+  "Create column": "Create column",
+  "Title": "Title",
+  "Order": "Order",
+  "Change Task": "Change task",
+  "Description":"Description",
+  "Save": "Save",
+  "Cancel": "Cancel",
+  "Create Task": "Create task",
+  "Back": "Back",
+  "Create board": "Create board",
+  "Yes": "Yes",
+  "July 31, 2023": "July 31, 2023"
 }

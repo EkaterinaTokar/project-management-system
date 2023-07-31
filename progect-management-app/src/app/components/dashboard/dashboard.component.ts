@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, Injectable } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {DashboardService, Column, Task} from "./services/dashboard.service";
 import { MatDialog } from '@angular/material/dialog';
@@ -19,10 +19,10 @@ import {TaskEditFormComponent} from "./task-edit-form/task-edit-form.component";
 export class DashboardComponent implements OnInit {
   boardId = '';
   columns: Array<any> = [];
-  taskData: Task[] = [];
   userDataId = '';
   @Output() updatedTaskDataEvent: EventEmitter<Task> = new EventEmitter();
   selectedColumn:any;
+  boardTitle!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,8 +35,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params): void => {
-      console.log(params)
       this.userDataId = params['userId'];
+      this.boardTitle = params['board'];
       if (params && params['boardId']) {
         this.getColumns(params['boardId'])
       }
@@ -48,7 +48,6 @@ export class DashboardComponent implements OnInit {
       .subscribe(
         (columns: Column[]) => {
           if (columns.length > 0) {
-            console.log(columns);
             this.getColumn(this.boardId)
           } else {
             this.openModuleForm()
@@ -75,15 +74,13 @@ export class DashboardComponent implements OnInit {
         (res) => {
           console.log(res);
           this.getColumn(this.boardId);
-        })
+      })
   }
 
   getColumn(boardColumnId: string) {
-    //console.log(boardColumnId);
     this.dashboardsService.getColumn(boardColumnId)
       .subscribe(
         (columns: Column[]) => {
-          console.log(columns);
           this.columns = columns.map(
             column=> {
             return { ...column, ...{tasks: []} };
@@ -105,7 +102,6 @@ export class DashboardComponent implements OnInit {
         this.dashboardsService.deleteColumn(boardId, columnId)
           .subscribe(
             (res) => {
-              console.log('Column delete:', res);
               this.getColumn(this.boardId);
             }
           );
@@ -122,8 +118,6 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe(
         (task: Task) => {
-          console.log(task);
-          console.log("add task")
           this.getTasks(boardId, columnId)
         })
   }
@@ -207,7 +201,6 @@ export class DashboardComponent implements OnInit {
             updatedTaskData.users!)
             .subscribe(
               (response: any) => {
-                console.log('Task updated on the server:', response);
                 const updatedColumn = this.columns.find(column => column._id === response.columnId);
                 if (updatedColumn) {
                   const updatedTaskIndex = updatedColumn.tasks.findIndex((t: any) => t._id === response._id);
@@ -238,9 +231,7 @@ export class DashboardComponent implements OnInit {
       this.selectedColumn._id, this.selectedColumn.boardId,this.selectedColumn.title, this.selectedColumn.order)
       .subscribe(
         (res) =>{
-          console.log(res)
           this.selectedColumn = null;
-          //column.title = column.editedTitle as string;
         }
       )
   }

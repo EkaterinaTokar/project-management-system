@@ -2,8 +2,6 @@ import { Injectable, EventEmitter} from '@angular/core';
 import {Observable, tap} from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-
-
 export interface Column{
   _id?: string,
   title: string,
@@ -40,15 +38,12 @@ export class DashboardService {
     return this.http.post<Column>(`${this.apiUrl}/boards/${boardId}/columns`, {title, order})
   }
  getColumn(boardColumnId: string):Observable<Array<any>> {
-   //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.get<Array<any>>(`${this.apiUrl}/boards/${boardColumnId}/columns`)
   }
   updateColumn(columnId:string, boardId:string,title:string, order:string){
-    //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.put(`${this.apiUrl}/boards/${boardId}/columns/${columnId}`, {title, order})
   }
   deleteColumn(boardId:string, columnId:string){
-    //const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('authToken')}`);
     return this.http.delete(`${this.apiUrl}/boards/${boardId}/columns/${columnId}`);
   }
   addTask(boardId: string, columnId: string, title: string, order: number,description:string,userId:number, users:[string]):Observable<Task> {
@@ -75,5 +70,4 @@ export class DashboardService {
       })
     );
    }
-
 }

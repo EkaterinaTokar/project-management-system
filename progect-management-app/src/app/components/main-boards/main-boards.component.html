@@ -1,11 +1,10 @@
 <div class="boards_container">
   <div class="board_head">
-  <h2>Boards</h2>
+  <h2 class="board_main-title">Boards</h2>
   <button (click)="addBoard()" style="width: 200px; border-radius: 10px" mat-mini-fab matTooltip="Add board" color="primary">
     <mat-icon>add</mat-icon>
   </button>
   </div>
-<!--<button (click)="addBoard()">Add board</button>-->
   <div class="board_container">
   <div class="board" *ngFor="let board of boards">
     <div>

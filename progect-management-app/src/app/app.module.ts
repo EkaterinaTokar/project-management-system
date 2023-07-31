@@ -31,12 +31,13 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { ColumnFormComponent } from './components/dashboard/column-form/column-form.component';
 import { TaskFormComponent } from './components/dashboard/task-form/task-form.component';
 import { TaskEditFormComponent } from './components/dashboard/task-edit-form/task-edit-form.component';
-
+import { ProfileComponent } from './components/profile/profile.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import { ErrorComponent } from './components/error/error.component';
 
 export function TranslateLoaderFact(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
-
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ export function TranslateLoaderFact(http: HttpClient) {
     ColumnFormComponent,
     TaskFormComponent,
     TaskEditFormComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ export function TranslateLoaderFact(http: HttpClient) {
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
+    MatSidenavModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

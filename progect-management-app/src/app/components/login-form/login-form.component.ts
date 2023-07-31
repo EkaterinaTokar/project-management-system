@@ -7,6 +7,8 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgIf} from "@angular/common";
 import {Router,ActivatedRoute} from "@angular/router";
 import {AuthService} from "../services/auth.service";
+import {TranslateModule} from "@ngx-translate/core";
+
 
 
 @Component({
@@ -14,7 +16,8 @@ import {AuthService} from "../services/auth.service";
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule, NgIf],
+  imports: [MatFormFieldModule, MatInputModule,
+    MatButtonModule, MatIconModule, ReactiveFormsModule, NgIf, TranslateModule],
 })
 export class LoginFormComponent implements OnInit {
   loginForm!: FormGroup;
@@ -23,7 +26,7 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {
   }
 
@@ -32,9 +35,8 @@ export class LoginFormComponent implements OnInit {
       'login': new FormControl('', [Validators.required]),
      'password': new FormControl('',
         [
-          Validators.required])
-      /*Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
-   ]),*/
+          Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+   ]),
     })
   }
 
@@ -60,6 +62,7 @@ export class LoginFormComponent implements OnInit {
   onLogin() {
       const form = this.loginForm.value;
       if (form.login && form.password) {
+        localStorage.setItem('password', form.password);
         this.authService.login(form.login, form.password)
       }
   }

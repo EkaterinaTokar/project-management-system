@@ -1,14 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  Inject,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  ChangeDetectorRef,
-  OnInit
-} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {DashboardService, Task} from "../services/dashboard.service";
@@ -29,7 +19,6 @@ export class TaskEditFormComponent{
     description: '',
     users: ['']
   };
- //@Output() updatedDataEvent: EventEmitter<Task> = new EventEmitter();
   taskForm: FormGroup;
 
   constructor(
@@ -52,8 +41,8 @@ export class TaskEditFormComponent{
     };
       this.dialogRef.close(updatedData);
   }
-
 }
+
   cancel(){
     this.dialogRef.close();
   }

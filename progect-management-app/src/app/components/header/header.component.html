@@ -7,19 +7,66 @@
         <div class = "header_button__lang">
           <button class = "header_buttons__link"
                              mat-raised-button color= "accent"
-                             (click)="switchLanguage()">{{ 'buttonText' | translate }}</button>
+                             (click)="switchLanguage()">
+            <mat-icon>language</mat-icon>
+            {{ 'buttonText' | translate }}
+          </button>
         </div>
         <nav class="header-buttons">
           <ul class="header_buttons__lists">
-            <li class = "header_buttons__item"><a class = "header_buttons__link" mat-raised-button color="primary" routerLink="/login-form">Log in</a></li>
-            <li class = "header_buttons__item" *ngIf="!userAuthenticated"><a class = "header_buttons__link" mat-raised-button color="primary" routerLink="/signup-form">Sign up</a></li>
+            <li class = "header_buttons__item">
+              <a class = "header_buttons__link" mat-raised-button color="primary" routerLink="/login-form">
+                <mat-icon>exit_to_app</mat-icon>
+                {{ 'Log in' | translate }}
+              </a>
+            </li>
+            <li class = "header_buttons__item" *ngIf="!userAuthenticated">
+              <a class = "header_buttons__link" mat-raised-button color="primary" routerLink="/signup-form">
+                {{ 'Sign up' | translate }}
+              </a></li>
             <li class = "header_buttons__item" *ngIf="userAuthenticated">
                <a class = "header_buttons__link">
-                 <button type="submit" mat-raised-button color="primary" (click)="logout()">Log out</button>
+                 <button type="submit" mat-raised-button color="primary" (click)="logout()">
+                   {{ 'Log out' | translate }}
+                 </button>
                </a>
+            </li>
+            <li  class = "header_buttons__item" *ngIf="userAuthenticated">
+              <button type="submit" mat-raised-button color="primary" (click)="openProfile()">
+                <mat-icon>account_circle</mat-icon>{{ 'Edit profile' | translate }}
+              </button>
             </li>
           </ul>
         </nav>
+        <div class="burger" (click)="toggleMenu()">
+          <i class="material-icons">menu</i>
+        </div>
+        <div class="burger-menu" [ngClass]="{ 'active': isMenuOpen }">
+          <ul class="header_buttons__lists" [ngClass]="{ 'active': isMenuOpen }">
+            <li class = "header_buttons__item">
+              <a class = "header_buttons__link" routerLink="/login-form">
+                <mat-icon>exit_to_app</mat-icon>
+                {{ 'Log in' | translate }}
+              </a>
+            </li>
+            <li class = "header_buttons__item" *ngIf="!userAuthenticated">
+              <a class = "header_buttons__link" routerLink="/signup-form">
+                {{ 'Sign up' | translate }}
+              </a></li>
+            <li class = "header_buttons__item" *ngIf="userAuthenticated">
+              <a class = "header_buttons__link">
+                <button type="submit" mat-raised-button color="primary" (click)="logout()">
+                  {{ 'Log out' | translate }}
+                </button>
+              </a>
+            </li>
+            <li  class = "header_buttons__item" *ngIf="userAuthenticated">
+              <button type="submit" (click)="openProfile()">
+                <mat-icon>account_circle</mat-icon>{{ 'Edit profile' | translate }}
+              </button>
+            </li>
+          </ul>
+        </div>
       </mat-toolbar-row>
     </mat-toolbar>
    </header>

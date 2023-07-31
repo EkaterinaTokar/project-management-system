@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-//import { Observable} from 'rxjs';
 import {AuthService} from "../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BoardsService, Board} from "./services/boards.service";
 import { MatDialog } from '@angular/material/dialog';
 import {DialogComponent} from "../dialog/dialog.component";
 
-
+export interface UserProf {
+  _id: string;
+  name: string;
+  login:string;
+  password:string;
+}
 @Component({
   selector: 'app-main-boards',
   templateUrl: './main-boards.component.html',
   styleUrls: ['./main-boards.component.scss']
 })
 export class MainBoardsComponent implements OnInit {
-  //private apiUrl = 'http://localhost:3000';
   boards: Array<any> = [];
   userId = '';
   selectedBoard: any;
@@ -32,7 +35,6 @@ export class MainBoardsComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       if (params && params['login']) {
-        console.log('Логин пользователя(params):', params['login']);
         this.getUser(params['login']);
       }
     });
@@ -45,6 +47,7 @@ export class MainBoardsComponent implements OnInit {
           console.log(response);
           const user = response.find((user: any) => user.login === login);
           this.userId = user._id;
+          localStorage.setItem('userId', this.userId);
           if (user && !this.authService.isAuthenticated()) {
             this.addBoard();
           }
@@ -63,7 +66,6 @@ export class MainBoardsComponent implements OnInit {
      this.boardsService.createBoard(boardData.title, boardData.owner, boardData.users)
        .subscribe(
           (res) => {
-          console.log(res);
          this.getBoards(this.userId);
       })
   }
@@ -71,7 +73,6 @@ export class MainBoardsComponent implements OnInit {
     this.boardsService.getBoards(ownerId)
       .subscribe(
       (boards) => {
-        console.log(boards)
         this.boards = boards;
       })
   }
@@ -87,8 +88,6 @@ export class MainBoardsComponent implements OnInit {
         this.boardsService.deleteBoard(userIdDel._id)
           .subscribe(
             (res) =>{
-              console.log(res)
-              console.log("board delete")
               this.getBoards(this.userId);
             }
           )
@@ -98,15 +97,12 @@ export class MainBoardsComponent implements OnInit {
   editBoard(event: Event, board: any): void {
     event.preventDefault();
     this.selectedBoard = board;
-    console.log(board)
   }
   saveBoard(selectedBoard: any){
-    console.log(selectedBoard)
     this.boardsService.updateBoardName(
       selectedBoard._id, selectedBoard.title, selectedBoard.owner,selectedBoard.users)
       .subscribe(
         (res) => {
-          console.log('Название доски обновлено:', res);
           this.selectedBoard = null;
         },
       )
@@ -118,11 +114,8 @@ export class MainBoardsComponent implements OnInit {
      event.preventDefault();
      if (board && board._id) {
        const boardId = board._id;
-       console.log(boardId);
        this.router.navigate([`/dashboard/:${boardId}`],
-         {queryParams : {boardId: boardId, userId: this.userId}});
-     } else {
-       console.log('Invalid board object or boardId');
+         {queryParams : {boardId: boardId, userId: this.userId, board:board.title}});
      }
   }
 }

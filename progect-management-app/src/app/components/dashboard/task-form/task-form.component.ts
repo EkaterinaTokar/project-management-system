@@ -13,7 +13,7 @@ export class TaskFormComponent {
   constructor(private FormBuilder: FormBuilder) {
     this.taskForm = this.FormBuilder.group({
       title: ['', Validators.required],
-      order: ['', Validators.required],
+      order: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       description: ['', Validators.required]
     });
   }

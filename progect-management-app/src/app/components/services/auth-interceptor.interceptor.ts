@@ -34,7 +34,6 @@ export class AuthInterceptorInterceptor implements HttpInterceptor {
               return next.handle(updatedRequest);
             }),
             catchError((refreshError) => {
-              // Если обновление токена не удалось, перенаправляем на страницу входа
               this.authService.logout();
               return throwError(refreshError);
             })

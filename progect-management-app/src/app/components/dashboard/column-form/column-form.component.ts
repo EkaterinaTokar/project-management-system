@@ -13,7 +13,7 @@ export class ColumnFormComponent {
   constructor(private formBuilder: FormBuilder) {
     this.columnForm = this.formBuilder.group({
       title: ['', Validators.required],
-      order: ['', Validators.required]
+      order: ['',  [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
   }
 
