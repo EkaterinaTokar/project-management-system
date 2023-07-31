@@ -1,0 +1,30 @@
+.boards_container{
+  margin: 10px 50px;
+}
+.board_head{
+  text-align: center;
+}
+.board_main-title {
+  text-transform: uppercase;
+  font-size: 32px;
+}
+.board {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 600px;
+  margin: 30px auto;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+}
+.updateInput{
+  width: 500px;
+  height: 100px;
+  border: none;
+  border-radius: 10px;
+}
+.board_buttons{
+  display: flex;
+}

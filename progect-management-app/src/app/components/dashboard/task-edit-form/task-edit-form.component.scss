@@ -1,0 +1,18 @@
+.task-edit_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  text-align: center;
+}
+.task-edit__form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+  padding: 90px 15px;
+}
+.title-field, .description-field {
+  width: 400px;
+}

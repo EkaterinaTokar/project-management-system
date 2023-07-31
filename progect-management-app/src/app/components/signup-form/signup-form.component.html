@@ -1,0 +1,31 @@
+<div class="signup_container">
+<form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="signup_container__form">
+  <mat-form-field class="name-field">
+    <mat-label>Name</mat-label>
+    <input formControlName="name" matInput type= "text" required>
+    <mat-error *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
+      {{errorMessageName()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="login-field">
+    <mat-label>Login</mat-label>
+    <input formControlName="login" matInput type="text" required>
+    <mat-error *ngIf="signupForm.get('login')?.invalid && signupForm.get('login')?.touched">
+      {{errorMessageLogin()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="password-field">
+  <mat-label>Enter your password</mat-label>
+  <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>
+  <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  </button>
+  <mat-error *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+    {{errorMessagePassword()}}
+  </mat-error>
+</mat-form-field>
+  <div class=" button button__signup">
+    <button [disabled]="signupForm.invalid" type="submit" mat-raised-button color="primary">Sign up</button>
+  </div>
+</form>
+</div>

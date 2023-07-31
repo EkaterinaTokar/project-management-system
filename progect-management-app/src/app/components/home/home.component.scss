@@ -1,0 +1,32 @@
+.welcome_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 90px auto;
+  max-width: 1200px;
+  background-color: #ffffff;
+}
+.welcome_header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.welcome_subtitle {
+  font-size: 18px;
+  color: #666666;
+  margin-bottom: 20px;
+}
+
+.welcome_description {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.welcome_images{
+  margin: 10px;
+  max-width: 100%;
+}
+.image_project-management{
+  border-radius:5%;
+}
+

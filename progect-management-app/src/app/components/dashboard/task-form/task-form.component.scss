@@ -1,0 +1,18 @@
+.task-form_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60%;
+  text-align: center;
+}
+.task-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+  padding: 90px 15px;
+}
+.title-field, .order-field, .description-field {
+  width: 400px;
+}

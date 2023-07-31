@@ -1,0 +1,17 @@
+<div class="profile_container">
+<form [formGroup]="profileForm" class="profile_container__form">
+  <h2>Edit Profile</h2>
+  <mat-form-field class="name-field">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" type= "text" required/>
+  </mat-form-field>
+  <mat-form-field class="login-field">
+    <mat-label>Login</mat-label>
+    <input matInput formControlName="login" type= "text" required/>
+  </mat-form-field>
+  <div>
+    <button class="button" mat-raised-button (click)="onSave()" [disabled]="profileForm.invalid" color="primary">Save</button>
+    <button class="button" mat-raised-button (click)="closeDialog()" color="warn">Cancel</button>
+  </div>
+</form>
+</div>

@@ -1,0 +1,21 @@
+<div  class="task-form_container">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+    <mat-form-field class="title-field">
+      <mat-label>{{'Title' | translate}}</mat-label>
+    <input type="text" matInput formControlName="title" required>
+    </mat-form-field>
+    <mat-form-field class="order-field">
+      <mat-label>{{'Order' | translate}}</mat-label>
+      <input matInput formControlName="order" required>
+      <div *ngIf="taskForm.get('order')?.hasError('pattern')" style="color: red">
+        Only numbers are allowed!
+      </div>
+    </mat-form-field>
+    <mat-form-field class="description-field">
+      <mat-label>{{'Description' | translate}}</mat-label>
+      <textarea matInput formControlName="description" required></textarea>
+    </mat-form-field>
+    <button type="submit" class="button" mat-raised-button [disabled]="taskForm.invalid" color="primary">{{'Create Task' | translate}}</button>
+  </form>
+</div>
+
